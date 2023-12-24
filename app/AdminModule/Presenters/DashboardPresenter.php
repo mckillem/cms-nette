@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\AdminModule\Presenters;
 
-use Nette;
 use Nette\Database\Explorer;
 
 final class DashboardPresenter extends BaseAdminPresenter

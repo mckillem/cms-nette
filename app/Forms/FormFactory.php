@@ -8,7 +8,6 @@ use Nette;
 use Nette\Application\UI\Form;
 use Tomaj\Form\Renderer\BootstrapVerticalRenderer;
 
-
 final class FormFactory
 {
 	use Nette\SmartObject;

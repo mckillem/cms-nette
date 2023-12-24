@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\FrontModule\Presenters;
 
 use App\Models\Todo;
-use Nette;
 use Nette\Application\UI\Form;
+use Nette\Application\UI\Presenter;
 
-final class HomepagePresenter extends Nette\Application\UI\Presenter
+final class HomepagePresenter extends Presenter
 {
 	private Todo $todo;
 

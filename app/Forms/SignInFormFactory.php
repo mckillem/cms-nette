@@ -7,6 +7,7 @@ namespace App\Forms;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Security\User;
+use Nette\Security\AuthenticationException;
 
 final class SignInFormFactory
 {
@@ -24,19 +25,20 @@ final class SignInFormFactory
 		$this->user = $user;
 	}
 
+	//	todo: předělat na dvě metody, už jsem začal. Nebo jak by to mělo vypadat?
 	public function create(callable $onSuccess): Form
 	{
 		$form = $this->factory->create();
 		$form->addEmail('email', 'Email:')
-			->setRequired('Zadejte prosím Váš email.');
+			->setRequired('Zadejte email.');
 		$form->addPassword('password', 'Password:')
-			->setRequired('Zadejte prosím Vaše heslo.');
+			->setRequired('Zadejte heslo.');
 		$form->addSubmit('send', 'Přihlásit');
 		$form->onSuccess[] = function (Form $form, \stdClass $values) use ($onSuccess): void {
 			try {
 				$this->user->login($values->email, $values->password);
-			} catch (Nette\Security\AuthenticationException $e) {
-				$form->addError('Je nutné zadat správné přihlašovací údaje.');
+			} catch (AuthenticationException $e) {
+				$form->addError('Email či heslo je špatně zadáno.');
 				return;
 			}
 			$onSuccess();
@@ -44,4 +46,12 @@ final class SignInFormFactory
 
 		return $form;
 	}
+
+//	private function loginFormSucceeded(\stdClass $data): void
+//	{
+//		$this->user->login($data->email, $data->password);
+//
+//		$this->flashMessage('Úkol uložen', 'success');
+//		$this->redirect('this');
+//	}
 }

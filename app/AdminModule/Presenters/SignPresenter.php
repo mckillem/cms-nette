@@ -10,10 +10,10 @@ use App\Forms\SignInFormFactory;
 final class SignPresenter extends BaseAdminPresenter
 {
 	/** @persistent */
-	public $backlink = '';
+	public String $backlink = '';
 
 	/** @var SignInFormFactory */
-	private $signInFactory;
+	private SignInFormFactory $signInFactory;
 
 
 	public function __construct(SignInFormFactory $signInFactory)
