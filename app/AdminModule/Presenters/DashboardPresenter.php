@@ -7,7 +7,7 @@ namespace App\AdminModule\Presenters;
 use Nette;
 use Nette\Database\Explorer;
 
-final class DashboardPresenter extends Nette\Application\UI\Presenter
+final class DashboardPresenter extends BaseAdminPresenter
 {
 	private Explorer $database;
 

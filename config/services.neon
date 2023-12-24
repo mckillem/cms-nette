@@ -1,8 +1,25 @@
+security:
+    roles:
+        guest:
+        member: [guest]
+        admin:
+
 services:
 	- App\Router\RouterFactory::createRouter
 	- App\Models\Todo
+	- App\Forms\FormFactory
+	- App\Forms\SignInFormFactory
 	authenticator: App\Models\UserManager
-
+	security.authorizator:
+		setup:
+			- addResource(Error)
+			- addResource(Admin:Dashboard)
+			- addResource(Admin:Sign)
+			- allow(admin)
+			- allow(guest, Error)
+			- allow(guest, Admin:Sign)
+			- allow(member, Admin:Dashboard, default)
+			- allow(member, Admin:Sign, out)
 
 search:
 	-	in: %appDir%
