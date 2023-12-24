@@ -7,6 +7,8 @@ security:
 services:
 	- App\Router\RouterFactory::createRouter
 	- App\Models\Todo
+	- App\Models\ArticleManager(picturePath: "%wwwDir%/images/articles")
+	- App\Models\CategoryManager
 	- App\Forms\FormFactory
 	- App\Forms\SignInFormFactory
 	authenticator: App\Models\UserManager

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Nette;
 use Nette\Security\Passwords;
 use Nette\Database\Table\Selection;
 use Nette\SmartObject;
@@ -14,9 +13,6 @@ use Nette\Security\AuthenticationException;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Database\Explorer;
 
-/**
- * Users management.
- */
 final class UserManager implements IAuthenticator
 {
 	use SmartObject;
@@ -30,11 +26,9 @@ final class UserManager implements IAuthenticator
 		COLUMN_LASTNAME = 'lastname',
 		COLUMN_ROLE = 'role';
 
-	/** @var Explorer */
-	private $database;
+	private Explorer $database;
 
-	/** @var Passwords */
-	private $passwords;
+	private Passwords $passwords;
 
 	public function __construct(Explorer $database, Passwords $passwords)
 	{
@@ -43,7 +37,6 @@ final class UserManager implements IAuthenticator
 	}
 
 	/**
-	 * Performs an authentication.
 	 * @throws AuthenticationException
 	 */
 	public function authenticate(array $credentials): IIdentity
@@ -53,7 +46,7 @@ final class UserManager implements IAuthenticator
 		$row = $this->database->table(self::TABLE_NAME)
 			->where(self::COLUMN_EMAIL, $email)
 			->fetch();
-
+//todo: oprvadu je vhodné rozlišovat mezi heslem a emailem? Může zjednodušit nabourání do systému
 		if (!$row) {
 			throw new AuthenticationException('Zadali jste nesprávný email.', self::IDENTITY_NOT_FOUND);
 		} elseif (!$this->passwords->verify($password, $row[self::COLUMN_PASSWORD_HASH])) {
@@ -66,6 +59,7 @@ final class UserManager implements IAuthenticator
 
 		$arr = $row->toArray();
 		unset($arr[self::COLUMN_PASSWORD_HASH]);
+
 		return new Identity($row[self::COLUMN_ID], $row[self::COLUMN_ROLE], $arr);
 	}
 }
