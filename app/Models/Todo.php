@@ -16,7 +16,10 @@ class Todo
 	}
 
 	public function getAllTodos() {
-		return $this->db->table('todo')->fetchAll();
+//		return $this->db->table('todo')->fetchAll();
+		return  $this->db->table('article')
+			->order('date_add DESC')
+			->limit(5);
 	}
 
 	public function saveTodo(\stdClass $data) {

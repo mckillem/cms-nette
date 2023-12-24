@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Presenters;
+namespace App\FrontModule\Presenters;
 
+use App\Models\Todo;
 use Nette;
 use Nette\Application\UI\Form;
-use App\Models\Todo;
 
-final class HomePresenter extends Nette\Application\UI\Presenter
+final class HomepagePresenter extends Nette\Application\UI\Presenter
 {
 	private Todo $todo;
 
@@ -19,7 +19,8 @@ final class HomePresenter extends Nette\Application\UI\Presenter
 
 	public function renderDefault(): void
 	{
-		$this->template->todos = $this->todo->getAllTodos();
+//		$this->template->todos = $this->todo->getAllTodos();
+		$this->template->articles = $this->todo->getAllTodos();
 	}
 
 	protected function createComponentTodoForm(): Form
@@ -48,6 +49,6 @@ final class HomePresenter extends Nette\Application\UI\Presenter
 		$this->todo->deleteTodo($id);
 
 		$this->flashMessage('Úkol byl smazán', 'success');
-		$this->redirect('Home:default');
+		$this->redirect('Homepage:default');
 	}
 }
