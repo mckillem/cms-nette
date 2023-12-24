@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   php:
-    container_name: todo-nette
-    image: todo-nette
+    container_name: cms-nette
+    image: cms-nette
     build: build/php
     volumes:
       - ../:/var/www/html
@@ -16,8 +16,8 @@ services:
       - database
 
   database:
-    container_name: todo-nette_db
-    image: todo-nette_db
+    container_name: cms-nette_db
+    image: cms-nette_db
     build: build/database
     ports:
       - 3307:3306
@@ -25,7 +25,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: test
       MYSQL_PASSWORD: test
-      MYSQL_DATABASE: todo-nette
+      MYSQL_DATABASE: cms-nette
     volumes:
       - ./build/database/01_create.sql:/docker-entrypoint-initdb.d/01_create.sql
 

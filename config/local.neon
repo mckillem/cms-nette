@@ -2,6 +2,6 @@ parameters:
 
 
 database:
-	dsn: 'mysql:host=database;dbname=todo-nette'
+	dsn: 'mysql:host=database;dbname=cms-nette'
 	user: test
 	password: test
