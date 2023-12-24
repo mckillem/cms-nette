@@ -1,0 +1,7 @@
+parameters:
+
+
+database:
+	dsn: 'mysql:host=database;dbname=todo-nette'
+	user: test
+	password: test

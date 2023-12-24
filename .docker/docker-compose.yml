@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  php:
+    container_name: todo-nette
+    image: todo-nette
+    build: build/php
+    volumes:
+      - ../:/var/www/html
+    ports:
+      - 8080:80
+    environment:
+      - NETTE_DEBUG=1
+#      - COMPOSER_AUTH=${COMPOSER_AUTH}
+    links:
+      - database
+
+  database:
+    container_name: todo-nette_db
+    image: todo-nette_db
+    build: build/database
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_DATABASE: todo-nette
+    volumes:
+      - ./build/database/01_create.sql:/docker-entrypoint-initdb.d/01_create.sql
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8081:80
+    environment:
+      - PMA_HOST=database
+      - PMA_USER=test
+      - PMA_PASSWORD=test
