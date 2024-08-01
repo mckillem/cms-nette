@@ -10,7 +10,6 @@ use Nette\Application\UI\Form;
 use App\Forms\SignUpFormFactory;
 
 class UserPresenter extends BaseAdminPresenter {
-	private const PASSWORD_MIN_LENGTH = 6;
 	private UserManager $userManager;
 
 	/** @var SignUpFormFactory */

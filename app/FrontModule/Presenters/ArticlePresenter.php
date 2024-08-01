@@ -44,17 +44,26 @@ class ArticlePresenter extends BaseFrontPresenter {
 			$this->flashMessage('Zvolená kategorie neexistuje.');
 			$this->redirect(':Front:Homepage:');
 		}
-		$products = $this->articleManager->getArticles($parameters);
+		$articles = $this->articleManager->getArticles($parameters);
 		$this->template->categoryName = isset($category) ? $category->name : 'Články';
-		$this->template->articles = $products;
+		$this->template->articles = $articles;
 	}
 
 	public function renderDetail(int $id) {
-		try {
-			$this->template->article = $this->articleManager->getArticleFromId($id);
-		} catch (\Exception $e) {
-			$this->error('Článek nebyl nalezen');
+//		echo $this->articleManager->getArticleFromId($id);
+
+		$this->template->article = $this->articleManager->getArticleFromId($id);
+//		if (!$this->template->article || !is_numeric($this->template->article)) {
+		if (!$this->template->article) {
+			$this->error();
 		}
+
+//todo: špatně, proč?
+//		try {
+//			$this->template->article = $this->articleManager->getArticleFromId($id);
+//		} catch (\Exception $e) {
+//			$this->error('Článek nebyl nalezen');
+//		}
 	}
 
 	public function createComponentComments(): Comments {

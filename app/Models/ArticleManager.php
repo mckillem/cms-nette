@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
 use Nette\Database\Explorer;
 use Nette\Utils\Image;
@@ -25,7 +24,7 @@ class ArticleManager extends DatabaseManager {
 		$this->picturePath = $picturePath;
 	}
 
-	public function getArticle(string $url, string $columns = NULL): IRow {
+	public function getArticle(string $url, string $columns = NULL): ActiveRow|null {
 
 		return $this->database->table(self::TABLE_NAME)
 			->select($columns ? $columns : '*')
@@ -33,7 +32,7 @@ class ArticleManager extends DatabaseManager {
 			->fetch();
 	}
 
-	public function getArticleFromId(int $id, string $columns = NULL): IRow {
+	public function getArticleFromId(int $id, string $columns = NULL): ActiveRow|null {
 
 		return $this->database->table(self::TABLE_NAME)
 			->select($columns ? $columns : '*')
@@ -60,7 +59,7 @@ class ArticleManager extends DatabaseManager {
 			->order(self::COLUMN_ID . ' DESC');
 	}
 
-	public function saveArticle(array $values): IRow {
+	public function saveArticle(array $values): ActiveRow {
 		$articleData = [
 			'title' => $values['title'],
 			'url' => $values['url'],
