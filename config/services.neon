@@ -6,22 +6,34 @@ security:
 
 services:
 	- App\Router\RouterFactory::createRouter
-	- App\Models\Todo
 	- App\Models\ArticleManager(picturePath: "%wwwDir%/images/articles")
 	- App\Models\CategoryManager
+	- App\Models\CommentManager
+	- App\Models\CmsManager(picturePath: "%wwwDir%/images/cms")
+	- App\Models\ContactManager
 	- App\Forms\FormFactory
 	- App\Forms\SignInFormFactory
+	- App\Forms\SignUpFormFactory
+	- App\FrontModule\Presenters\ContactPresenter(%contactEmail%)
 	authenticator: App\Models\UserManager
 	security.authorizator:
 		setup:
 			- addResource(Error)
 			- addResource(Admin:Dashboard)
 			- addResource(Admin:Sign)
+			- addResource(Admin:Category)
+			- addResource(Admin:Article)
+			- addResource(Admin:User)
+			- addResource(Admin:Comment)
+			- addResource(Admin:Cms)
+			- addResource(Admin:Setting)
 			- allow(admin)
 			- allow(guest, Error)
 			- allow(guest, Admin:Sign)
 			- allow(member, Admin:Dashboard, default)
 			- allow(member, Admin:Sign, out)
+			- allow(member, Admin:Comment)
+			- allow(member, Admin:Article)
 
 search:
 	-	in: %appDir%

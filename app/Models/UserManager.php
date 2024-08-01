@@ -12,6 +12,8 @@ use Nette\Security\Identity;
 use Nette\Security\AuthenticationException;
 use Nette\Database\UniqueConstraintViolationException;
 use Nette\Database\Explorer;
+use Nette\Utils\Validators;
+use App\Forms\DuplicateNameException;
 
 final class UserManager implements IAuthenticator
 {
@@ -61,5 +63,28 @@ final class UserManager implements IAuthenticator
 		unset($arr[self::COLUMN_PASSWORD_HASH]);
 
 		return new Identity($row[self::COLUMN_ID], $row[self::COLUMN_ROLE], $arr);
+	}
+
+	public function add(string $firstname, string $lastname, string $email, string $password, string $role): void {
+		Validators::assert($email, 'email');
+		try {
+			$this->database->table(self::TABLE_NAME)->insert([
+				self::COLUMN_FIRSTNAME => $firstname,
+				self::COLUMN_LASTNAME => $lastname,
+				self::COLUMN_PASSWORD_HASH => $this->passwords->hash($password),
+				self::COLUMN_EMAIL => $email,
+				self::COLUMN_ROLE => $role,
+			]);
+		} catch (UniqueConstraintViolationException $e) {
+			throw new DuplicateNameException;
+		}
+	}
+
+	public function getUsers(): Selection {
+		return $this->database->table(self::TABLE_NAME);
+	}
+
+	public function removeUser(int $id) {
+		$this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $id)->delete();
 	}
 }

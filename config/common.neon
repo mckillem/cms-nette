@@ -1,5 +1,5 @@
 parameters:
-
+    contactEmail: 'admin@localhost.cz'
 
 application:
 	errorPresenter: Error
@@ -9,7 +9,8 @@ application:
 
 latte:
 	strictTypes: yes
-
+	macros:
+		- Nittro\Bridges\NittroLatte\NittroMacros
 
 session:
 	expiration: 14 days
