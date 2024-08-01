@@ -58,7 +58,7 @@ class CategoryManager extends DatabaseManager {
 			->fetchPairs(self::COLUMN_ID, self::COLUMN_TITLE);
 	}
 
-	public function getCategory(string $url): ActiveRow {
+	public function getCategory(string $url): ActiveRow|null {
 		return $this->database->table(self::TABLE_NAME)
 			->where(self::COLUMN_URL, $url)
 			->fetch();

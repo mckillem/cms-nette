@@ -6,7 +6,6 @@ namespace App\Models;
 
 use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
-use Nette\Database\Table\IRow;
 use Nette\Database\Table\Selection;
 use Nette\Utils\Image;
 
@@ -24,14 +23,14 @@ class CmsManager extends DatabaseManager {
 		$this->picturePath = $picturePath;
 	}
 
-	public function getCmsPage(string $url, string $columns = NULL): IRow {
+	public function getCmsPage(string $url, string $columns = NULL): ActiveRow|null {
 		return $this->database->table(self::TABLE_NAME)
 			->select($columns ? $columns : '*')
 			->where(self::COLUMN_URL, $url)
 			->fetch();
 	}
 
-	public function getCmsPageFromId(int $id, string $columns = NULL): IRow {
+	public function getCmsPageFromId(int $id, string $columns = NULL): ActiveRow {
 		return $this->database->table(self::TABLE_NAME)
 			->select($columns ? $columns : '*')
 			->where(self::COLUMN_ID, $id)
@@ -50,7 +49,7 @@ class CmsManager extends DatabaseManager {
 		return $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ON_HOMEPAGE, 1)->fetch();
 	}
 
-	public function saveCmsPage(array $values): IRow {
+	public function saveCmsPage(array $values): ActiveRow {
 		$cmsData = [
 			'title' => $values['title'],
 			'url' => $values['url'],
