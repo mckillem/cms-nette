@@ -11,13 +11,13 @@ use App\Components\Comments;
 class ArticlePresenter extends BaseFrontPresenter {
 
 	/** @var int */
-	private $article_id;
+	private int $article_id;
 
 	/** @var ArticleManager */
-	private $articleManager;
+	private ArticleManager $articleManager;
 
 	/** @var CommentManager */
-	private $commentManager;
+	private CommentManager $commentManager;
 
 	/**
 	 * @param ArticleManager $articleManager
@@ -35,15 +35,16 @@ class ArticlePresenter extends BaseFrontPresenter {
 
 	public function renderDefault(string $url): void {
 		$parameters = $this->getParameters();
+//		todo: je třeba kontrolovat kategorii, protože její zadání není povinné.
+// Dává to ale smysl? článek má být aspoň v jedné kategorii
 		if ($url && ($category = $this->categoryManager->getCategory($url))) {
 			$parameters['category_id'] = $category->id;
 		} elseif ($url) {
 			$this->flashMessage('Zvolená kategorie neexistuje.');
 			$this->redirect(':Front:Homepage:');
 		}
-		$articles = $this->articleManager->getArticles($parameters);
 		$this->template->categoryName = isset($category) ? $category->name : 'Články';
-		$this->template->articles = $articles;
+		$this->template->articles = $this->articleManager->getArticles($parameters);
 	}
 
 	public function renderDetail(int $id): void {

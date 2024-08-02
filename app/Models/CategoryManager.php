@@ -14,7 +14,7 @@ class CategoryManager extends DatabaseManager {
 		COLUMN_TITLE = 'name',
 		COLUMN_URL = 'url';
 
-	public function getArticleCategories(int $id) {
+	public function getArticleCategories(int $id): array {
 		return $this->database->table(ArticleManager::TABLE_NAME . '_' . self::TABLE_NAME)
 			->select(self::COLUMN_ID)
 			->where(ArticleManager::COLUMN_ID, $id)
@@ -52,7 +52,7 @@ class CategoryManager extends DatabaseManager {
 			->order(self::COLUMN_ID . ' ASC');
 	}
 
-	public function getAllCategory() {
+	public function getAllCategory(): array {
 		return $this->database->table(self::TABLE_NAME)
 			->fetchPairs(self::COLUMN_ID, self::COLUMN_TITLE);
 	}
@@ -63,13 +63,13 @@ class CategoryManager extends DatabaseManager {
 			->fetch();
 	}
 
-	public function removeCategory(string $url) {
+	public function removeCategory(string $url): void {
 		$this->database->table(self::TABLE_NAME)
 			->where(self::COLUMN_URL, $url)
 			->delete();
 	}
 
-	public function saveCategory(array $category) {
+	public function saveCategory(array $category): void {
 		if (empty($category[self::COLUMN_ID])) {
 			unset($category[self::COLUMN_ID]);
 			$this->database->table(self::TABLE_NAME)

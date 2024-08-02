@@ -6,7 +6,6 @@ namespace App\AdminModule\Presenters;
 
 use App\Models\ArticleManager;
 use App\Models\CategoryManager;
-use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\Database\UniqueConstraintViolationException;
 use Tomaj\Form\Renderer\BootstrapVerticalRenderer;
@@ -21,17 +20,17 @@ class ArticlePresenter extends BaseAdminPresenter {
 		$this->categoryManager = $categoryManager;
 	}
 
-	public function renderList() {
+	public function renderList(): void {
 		$this->template->articles = $this->articleManager->getAllArticles();
 	}
 
-	public function actionRemove(string $url = null) {
+	public function actionRemove(string $url = null): void {
 		$this->articleManager->removeArticle($url);
 		$this->flashMessage('Článek byl úspěšně odstraněn.');
 		$this->redirect('Article:list');
 	}
 
-	public function actionEditor(string $url = null) {
+	public function actionEditor(string $url = null): void {
 		if ($url) {
 			if (!($article = $this->articleManager->getArticle($url))) {
 				$this->flashMessage('Článek nebyl nalezen.');
@@ -58,6 +57,9 @@ class ArticlePresenter extends BaseAdminPresenter {
 		$form->addTextArea('description', 'Obsah');
 		$categories = $this->categoryManager->getAllCategory();
 		$form->addSelect('categories', 'Kategorie:', $categories)
+			->setRequired()
+//			todo: zajistit, aby při editaci byla kategorie správně vyplněna (ostatní pole to vyplní),
+// páč když edituju, tak nemusím vědět v jaké kategorii článek je
 			->setPrompt('Zvolte kategorii');
 		$form->addSubmit('save', 'Uložit článek');
 		$form->onSuccess[] = function (Form $form, Array $values) {
@@ -69,6 +71,7 @@ class ArticlePresenter extends BaseAdminPresenter {
 				$this->flashMessage('Článek s touto URL adresou již existuje.');
 			}
 		};
+
 		return $form;
 	}
 }

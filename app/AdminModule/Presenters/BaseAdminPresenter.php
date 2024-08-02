@@ -8,7 +8,6 @@ use App\Forms\FormFactory;
 use Nette\Application\UI\Presenter;
 
 abstract class BaseAdminPresenter extends Presenter {
-
 	/** @var FormFactory */
 	protected $formFactory;
 
