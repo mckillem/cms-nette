@@ -7,10 +7,12 @@ namespace App\Router;
 use Nette;
 use Nette\Application\Routers\RouteList;
 
-final class RouterFactory {
+final class RouterFactory
+{
 	use Nette\StaticClass;
 
-	public static function createRouter(): RouteList {
+	public static function createRouter(): RouteList
+	{
 		$router = new RouteList;
 		$router[] = $module = new RouteList('Admin');
 		$module->addRoute('admin/<presenter>/<action>', 'Dashboard:default');
