@@ -3,7 +3,7 @@
 namespace App\FrontModule\Presenters;
 
 use Nette\Application\UI\Form;
-use Nette\Mail\IMailer;
+use Nette\Mail\Mailer;
 use Nette\Mail\Message;
 use Nette\Mail\SendException;
 use Nette\Utils\ArrayHash;
@@ -18,7 +18,7 @@ class ContactPresenter extends BaseFrontPresenter {
 	/** @var string */
 	private $contactEmail;
 
-	/** @var IMailer */
+	/** @var Mailer */
 	private $mailer;
 
 	/** @var ContactManager */
@@ -26,17 +26,17 @@ class ContactPresenter extends BaseFrontPresenter {
 
 	/**
 	 * @param string  $contactEmail
-	 * @param IMailer $mailer
+	 * @param Mailer $mailer
 	 * @param ContactManager $contactManager
 	 */
-	public function __construct(string $contactEmail, IMailer $mailer, ContactManager $contactManager) {
+	public function __construct(string $contactEmail, Mailer $mailer, ContactManager $contactManager) {
 		parent::__construct();
 		$this->contactEmail = $contactEmail;
 		$this->mailer = $mailer;
 		$this->contactManager = $contactManager;
 	}
 
-	public function renderDefault() {
+	public function renderDefault(): void {
 		$this->template->contact = $this->contactManager->getContact();
 	}
 

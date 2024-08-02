@@ -21,11 +21,11 @@ class UserPresenter extends BaseAdminPresenter {
 		$this->signUpFormFactory = $signUpFormFactory;
 	}
 
-	public function renderList() {
+	public function renderList(): void {
 		$this->template->users = $this->userManager->getUsers();
 	}
 
-	public function actionRemove(int $id = null) {
+	public function actionRemove(int $id = null): void {
 		$this->userManager->removeUser($id);
 		$this->flashMessage('Uživatel byl úspěšně odstraněn.');
 		$this->redirect('User:list');

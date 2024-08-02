@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\FrontModule\Presenters;
 
-use App\Models\CategoryManager;
 use App\Models\ArticleManager;
 use App\Models\CommentManager;
 use App\Components\Comments;
@@ -24,19 +23,17 @@ class ArticlePresenter extends BaseFrontPresenter {
 	 * @param ArticleManager $articleManager
 	 * @param CommentManager $commentManager
 	 */
-	public function __construct(
-		ArticleManager $articleManager,
-		CommentManager $commentManager) {
+	public function __construct(ArticleManager $articleManager, CommentManager $commentManager) {
 		parent::__construct();
 		$this->articleManager = $articleManager;
 		$this->commentManager = $commentManager;
 	}
 
-	public function actionDetail(int $id) {
+	public function actionDetail(int $id): void {
 		$this->article_id = $id;
 	}
 
-	public function renderDefault(string $url) {
+	public function renderDefault(string $url): void {
 		$parameters = $this->getParameters();
 		if ($url && ($category = $this->categoryManager->getCategory($url))) {
 			$parameters['category_id'] = $category->id;
@@ -49,11 +46,9 @@ class ArticlePresenter extends BaseFrontPresenter {
 		$this->template->articles = $articles;
 	}
 
-	public function renderDetail(int $id) {
-//		echo $this->articleManager->getArticleFromId($id);
+	public function renderDetail(int $id): void {
 
 		$this->template->article = $this->articleManager->getArticleFromId($id);
-//		if (!$this->template->article || !is_numeric($this->template->article)) {
 		if (!$this->template->article) {
 			$this->error();
 		}

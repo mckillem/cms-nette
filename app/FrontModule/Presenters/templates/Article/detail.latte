@@ -7,12 +7,12 @@
 	{if $article->has_picture}
 		<img class="card-img-top" src="{$basePath}/images/articles/{$article->id}.jpg?{time()}" alt="{$article->title}">
 	{/if}
-        <div class="card-body">
-			<h2 class="card-title">{$article->title}</h2>
-			<p class="card-text">{$article->description|noescape}</p>
-        </div>
-        <div class="card-footer text-muted">
-			Publikováno: {$article->date_add|date:'j. n. Y H:i'}
-        </div>
-            {control comments}
+	<div class="card-body">
+		<h2 class="card-title">{$article->title}</h2>
+		<p class="card-text">{$article->description|noescape}</p>
+	</div>
+	<div class="card-footer text-muted">
+		Publikováno: {$article->date_add|date:'j. n. Y H:i'}
+	</div>
+	{control comments}
 </div>

@@ -12,19 +12,17 @@ abstract class BaseFrontPresenter extends Presenter {
 	protected CategoryManager $categoryManager;
 	protected CmsManager $cmsManager;
 
-	public function injectManagerDependencies(
-		CategoryManager $categoryManager,
-		CmsManager $cmsManager) {
+	public function injectManagerDependencies(CategoryManager $categoryManager, CmsManager $cmsManager): void {
 		$this->categoryManager = $categoryManager;
 		$this->cmsManager = $cmsManager;
 	}
 
-	protected function startup() {
+	protected function startup(): void {
 		parent::startup();
 		$this->setDefaultSnippets(['header', 'content']);
 	}
 
-	protected function beforeRender() {
+	protected function beforeRender(): void {
 		parent::beforeRender();
 		$this->template->domain = $this->getHttpRequest()->getUrl()->getHost();
 		$this->template->categories = $this->categoryManager->getCategories();

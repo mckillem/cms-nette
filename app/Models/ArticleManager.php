@@ -10,7 +10,6 @@ use Nette\Database\Explorer;
 use Nette\Utils\Image;
 
 class ArticleManager extends DatabaseManager {
-
 	private string $picturePath;
 
 	const

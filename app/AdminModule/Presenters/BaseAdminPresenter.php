@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\AdminModule\Presenters;
 
 use App\Forms\FormFactory;
-use Nette\Application\AbortException;
 use Nette\Application\UI\Presenter;
 
 abstract class BaseAdminPresenter extends Presenter {
@@ -16,7 +15,7 @@ abstract class BaseAdminPresenter extends Presenter {
 	/**
 	 * @param FormFactory $formFactory
 	 */
-	public final function injectFormFactory(FormFactory $formFactory) {
+	public final function injectFormFactory(FormFactory $formFactory): void {
 		$this->formFactory = $formFactory;
 	}
 
@@ -32,7 +31,7 @@ abstract class BaseAdminPresenter extends Presenter {
 		}
 	}
 
-	public function actionLogout() {
+	public function actionLogout(): void {
 		$this->user->logout();
 		$this->redirect('login');
 	}

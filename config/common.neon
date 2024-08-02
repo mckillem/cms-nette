@@ -1,5 +1,5 @@
 parameters:
-    contactEmail: 'admin@localhost.cz'
+    contactEmail: 'mckillem@tuta.io'
 
 application:
 	errorPresenter: Error

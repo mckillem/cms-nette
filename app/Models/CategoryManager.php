@@ -8,7 +8,6 @@ use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 
 class CategoryManager extends DatabaseManager {
-
 	const
 		TABLE_NAME = 'category',
 		COLUMN_ID = 'id',
@@ -22,7 +21,7 @@ class CategoryManager extends DatabaseManager {
 			->fetchPairs(null, self::COLUMN_ID);
 	}
 
-	public function updateArticleCategories(int $id, array $categories) {
+	public function updateArticleCategories(int $id, array $categories): void {
 		$this->database->table(ArticleManager::TABLE_NAME . '_' . self::TABLE_NAME)
 			->where(ArticleManager::COLUMN_ID, $id)
 			->delete();

@@ -6,8 +6,7 @@ namespace App\FrontModule\Presenters;
 
 class CmsPresenter extends BaseFrontPresenter {
 
-	public function renderDefault(string $url) {
-
+	public function renderDefault(string $url): void {
 		$this->template->page = $this->cmsManager->getCmsPage($url);
 		if (!$this->template->page) {
 			$this->error();
