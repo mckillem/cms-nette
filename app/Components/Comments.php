@@ -13,32 +13,39 @@ class Comments extends Control {
 	private int $article_id;
 	private array|null $comments = null;
 
-	public function __construct(CommentManager $commentManager, int $article_id) {
+	public function __construct(CommentManager $commentManager, int $article_id)
+	{
 		$this->commentManager = $commentManager;
 		$this->article_id = $article_id;
 	}
 
-	public function getComments(): array {
+	public function getComments(): array
+	{
 		if ($this->comments === null) {
 			$this->comments = $this->commentManager->getComments($this->article_id);
 		}
+
 		return $this->comments;
 	}
 
-	public function handleDelete(int $id) {
+	public function handleDelete(int $id): void
+	{
 		$this->commentManager->deleteComment($id);
 		$this->flashMessage('Komentář byl odstraněn.', 'success');
 		$this->getPresenter()->postGet('this');
 		$this->getPresenter()->sendPayload();
 	}
 
-	public function render() {
+	public function render(): void
+	{
 		$this->template->comments = $this->getComments();
-		$this->template->setFile(__DIR__ . '/templates/comments.latte');
-		$this->template->render();
+//		$this->template->setFile(__DIR__ . '/templates/comments.latte');
+//		$this->template->render();
+		$this->template->render(__DIR__ . '/templates/comments.latte');
 	}
 
-	public function doAddComment(Form $form, array $values) {
+	public function doAddComment(Form $form, array $values): void
+	{
 		$comment = $this->commentManager->addComment($this->article_id, $values);
 		$this->flashMessage('Komentář byl přidán.', 'success');
 		$this->getPresenter()->postGet('this');
@@ -46,7 +53,8 @@ class Comments extends Control {
 		$this->comments = [$comment];
 	}
 
-	public function createComponentCommentForm(): Form {
+	public function createComponentCommentForm(): Form
+	{
 		$form = new Form();
 		$form->addText('author_name', 'Vaše jméno:')
 			->setRequired(true);
@@ -56,6 +64,7 @@ class Comments extends Control {
 			->setRequired(true);
 		$form->addSubmit('add', 'Přidat');
 		$form->onSuccess[] = [$this, 'doAddComment'];
+
 		return $form;
 	}
 }
