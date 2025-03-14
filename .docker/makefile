@@ -1,8 +1,8 @@
-docker-up:
-	docker-compose -p cms-nette up -d --build --force-recreate
+docker up:
+	docker compose -p cms-nette up -d --build --force-recreate
 
-docker-down:
-	docker-compose -p cms-nette down
+docker down:
+	docker compose -p cms-nette down
 
 phpstan:
 	docker exec cms-nette vendor/bin/phpstan analyse app
